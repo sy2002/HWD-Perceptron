@@ -1,0 +1,4 @@
+__pycache__
+.vscode
+training/mnist_test.csv
+training/mnist_train.csv
