@@ -92,7 +92,10 @@ The format of each line of the CSV files is:
 `<label><pixel 1>, <pixel 2>, ..., <pixel 784>`
 
 `<label>` is describing the digit between 0 and 9 and `<pixel x>` is a number
-between 0 and 255 that is representing a greyscale value. The pixels are
+between 0 and 255 that is representing a greyscale value. In contrast to
+the usual convention that "0" is black and "255" is white, this dataset works
+the other way round: "0" is white (aka "nothing is drawn at that pixel") and
+"255" is black (aka "this pixel is having maximum intensity"). The pixels are
 arranged in an 28x28 grid, that means that `<pixel 1>` to `<pixel 28>` are
 row 1 of the digit's bitmap and `<pixel 29>` to `<pixel 57>` are row 2 and
 so on.
