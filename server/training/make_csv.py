@@ -31,7 +31,7 @@ def convert(imgf, labelf, outf, n):
 
 if sys.version_info <= (3, 0):
     sys.stdout.write("The HWD Perceptron project needs Python 3\n")
-    sys.exit(1)
+    sys.exit()
 
 print("This converter creates mnist_train.csv and mnist_test.csv from")
 print("raw data found on http://yann.lecun.com/exdb/mnist/")

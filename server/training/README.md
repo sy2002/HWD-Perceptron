@@ -64,7 +64,7 @@ Inspecting Training Data
 ------------------------
 
 To visually check, if the installation of the training data worked and if
-your Python 3 stack runs fine: Go back to the project's main folder and run
+your Python 3 stack runs fine: Go back to the project's root folder and run
 `show_data.py`. It shows 10 random digits from the 60,000 digit training set
 as ASCII art on stdout.
 

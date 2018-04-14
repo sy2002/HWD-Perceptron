@@ -24,6 +24,10 @@ if not os.path.isfile(DATA_SOURCE):
     print("Please follow the instructions in training/README.md")
     sys.exit()
 
+if sys.version_info <= (3, 0):
+    sys.stdout.write("The HWD Perceptron project needs Python 3\n")
+    sys.exit()
+    
 if len(sys.argv) == 2:
     amount = int(sys.argv[1])
 else:
