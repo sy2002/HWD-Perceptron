@@ -12,6 +12,8 @@ frontend then displays the recognized digit right next to the painted version.
 
 ![HWD Sample Screenshot](client/screenshot.jpg)
 
+Before installing, you can [try it on http://www.sy2002.de/nn.html](http://www.sy2002.de/nn.html)
+
 Installation
 ------------
 
