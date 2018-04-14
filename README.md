@@ -7,7 +7,8 @@ Perceptron based handwritten digits recognition in particular.
 
 The frontend is a HTML5/JavaScript client that allows you to paint the
 digits on the screen. When you press the button, the Python Flask backend
-receives the pixels via a REST call and returns the recognized digit.
+receives the pixels via a REST call and returns the recognized digit. The
+frontend then displays the recognized digit right next to the painted version.
 
 ![HWD Sample Screenshot](client/screenshot.jpg)
 
@@ -20,7 +21,7 @@ Windows. On Windows this might be Cygwin or a Linux Subsystem (Windows 10+).
 Open a terminal window and execute the following commands:
 
 ```
-git clone https://TODOSETTHERIGHTPATH.com/hwdt
+git clone https://github.com/sy2002/HWD-Perceptron.git
 cd HWD-Perceptron
 ./install.sh
 ```
@@ -42,6 +43,32 @@ The following things will happen during the installation:
 
 5. Finally, the recognition server is started. Leave the terminal window
    running and follow the steps in the next section.
+
+### Troubleshooting
+
+On some systems, there are multiple versions of Python installed. Sometimes
+Python 2 can be executed via `python` and Python 3 via `python3`. This
+project expects, that running `python` and `pip` yields Python 3. If this
+is not the case on your machine, then consider using a python
+Virtual Environment.
+
+A Virtual Environment is also useful when there are challenges with the
+dependencies or collisions with other modules on your system. 
+
+Here are the alternate installation instructions that install and run the
+whole project in a Virtual Environment. Execute them instead of the
+above-mentioned steps. It is assumed that your Python 3 is called `python3`
+this time (versus `python` in the above-mentioned instructions). If your
+Python 3 is called otherwise, then just use the appropriate name instead of
+`python3` in the following steps.
+
+```
+git clone https://github.com/sy2002/HWD-Perceptron.git
+cd HWD-Perceptron
+python3 -m venv .
+source bin/activate
+./install.sh
+```
 
 Running
 -------

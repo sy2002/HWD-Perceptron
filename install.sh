@@ -13,14 +13,14 @@ read -p "Press ENTER to continue or CTRL+C to abort"
 
 py_chk=`python --version|cut -d " " -f2|cut -d "." -f1`
 if [ ! $py_chk = "3" ]; then
-    echo "python 3 is needed for this project."
+    echo "Python 3 is needed for this project."
     exit 1
 fi
 
 pip_chk=`pip --version|cut -d " " -f1`
 pip_version_chk=`pip --version|cut -d " " -f6|cut -d "." -f1`
 if [ ! $pip_chk = "pip" ] || [ ! $pip_version_chk = "3" ]; then
-    echo "pip for python 3 is needed for this project."
+    echo "pip for Python 3 is needed for this project."
     exit 1
 fi
 
