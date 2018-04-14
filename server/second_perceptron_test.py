@@ -2,10 +2,7 @@
 #
 # Second test of my simple perceptron:
 # Create a 5 layer 4, 8, 5, 4, 2 network and teach it to output
-# multiple outputs depending on certain inputs that happen
-# to be the birth dates of me and my family:
-# input = birth year
-# output = birth day
+# multiple outputs depending on certain inputs.
 #
 # done by sy2002 at 7th of April 2018 
 
@@ -17,10 +14,10 @@ import progressbar
 import timeit
 
 training_set = [
-    [[0.23, 0.09],   [0.1, 0.9, 0.7, 0.6]],         #1976 => 23.9
-    [[0.11, 0.07],   [0.1, 0.9, 0.7, 0.8]],         #1978 => 11.7.
-    [[0.02, 0.12],   [0.2, 0.000001, 0.1, 0.1]],    #2011 => 2.12.
-    [[0.23, 0.02],   [0.2, 0.000001, 0.1, 0.4]]     #2014 => 23.2.
+    [[0.23, 0.09],   [0.1, 0.9, 0.7, 0.6]],         
+    [[0.11, 0.07],   [0.1, 0.9, 0.7, 0.8]],         
+    [[0.02, 0.12],   [0.2, 0.000001, 0.1, 0.1]],    
+    [[0.23, 0.02],   [0.2, 0.000001, 0.1, 0.4]]
 ]
 
 def query_it(label, net):

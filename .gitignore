@@ -1,4 +1,5 @@
 __pycache__
 .vscode
-training/mnist_test.csv
-training/mnist_train.csv
+server/training/mnist_test.csv
+server/training/mnist_train.csv
+server/saved_nn/test-epoch-1.npz

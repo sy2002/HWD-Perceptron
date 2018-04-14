@@ -16,7 +16,14 @@ from nist_csv import *
 app = Flask(__name__)
 CORS(app)
 
-nn = spnn.SimplePerceptronNN(filename="saved_nn/784-100-10-0.004-epoch-60.npz")
+#recommended: great success/size-ratio and success rate of 97.83% 
+#the_network = "saved_nn/784-100-10-0.004-2nd-epoch-66.npz"
+
+#for demo purposes: you need to run XYZ from the root of the project folder
+#to make sure this file exists
+the_network = "saved_nn/test-epoch-1.npz"
+
+nn = spnn.SimplePerceptronNN(filename=the_network)
 
 @app.route("/")
 def hello():

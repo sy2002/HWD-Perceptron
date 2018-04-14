@@ -1,7 +1,7 @@
-# Handwritten Digits Test (hwdt.py)
+# Handwritten Digits Trainer (hwdt.py)
 #
 # My interpretation of the learnings from the MYONN book (by Tariq Rashid):
-# A test program for the SimplePerceptronNN class that uses the handwritten
+# A training program for the SimplePerceptronNN class that uses the handwritten
 # digits dataset from MNIST (http://yann.lecun.com/exdb/mnist/) converted
 # to CSV files (https://pjreddie.com/projects/mnist-in-csv/)
 #
@@ -38,13 +38,13 @@ import scipy.ndimage as ndi
 # ==============================================================
 
 network_shape = [784, 100, 10]
-learning_rate = 0.004
-epochs = 100
+learning_rate = 0.03
+epochs = 1
 
-file_save     = "784-100-10-0.004-2nd"
+file_save     = "test"
 
-file_training = "mnist_train.csv"
-file_testing  = "mnist_test.csv"
+file_training = "training/mnist_train.csv"
+file_testing  = "training/mnist_test.csv"
     
 #turns one data element into three by adding a 10° to the left and to the right
 #rotated version (and keeping the same label and output data)
@@ -82,7 +82,7 @@ def enhance_data(labels, outputs, handwritten_pixels):
 # Main Program
 # ==============================================================
 
-print("\nHandwritten Digits Test by sy2002 at 8th of April 2018\n")
+print("\nHandwritten Digits Trainer by sy2002 at 8th of April 2018\n")
 print("Network shape:", network_shape)
 print("Learning rate: %0.4f" % learning_rate)
 print("Epochs: %i\n" % epochs)

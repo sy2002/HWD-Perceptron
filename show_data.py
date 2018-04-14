@@ -8,13 +8,14 @@
 #
 # done by sy2002 at April, 14th 2018
 
-from nist_csv import *
-
 import os.path
 import random
 import sys
 
-DATA_SOURCE = "training/mnist_train.csv"
+sys.path.append('./server')
+from nist_csv import *
+
+DATA_SOURCE = "server/training/mnist_train.csv"
 
 print("Visual test app to output ASCII art based on training data")
 print("done by sy2002 at April, 14th 2018\n")

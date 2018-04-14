@@ -7,14 +7,14 @@ echo ""
 
 if [ -f mnist_train.csv ] && [ -f mnist_test.csv ]; then
     echo "Training and test data (mnist_train.csv and mnist_test.csv) found."
-    read -p "Press enter if you want to delete them and install new or CTRL+C to abort"
+    read -p "Press ENTER if you want to delete them and install new or CTRL+C to abort"
     rm mnist_train.csv mnist_test.csv
     echo ""
 fi
 
 echo "This script will download mnist_train.csv and mnist_test.csv from the"
 echo "Internet so make sure you are connected and you have 130 MB of free space"
-read -p "Press enter to continue or CTRL+C to abort"
+read -p "Press ENTER to continue or CTRL+C to abort"
 echo ""
 
 TRAIN_SET=https://pjreddie.com/media/files/mnist_train.csv
