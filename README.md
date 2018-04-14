@@ -21,7 +21,7 @@ Open a terminal window and execute the following commands:
 
 ```
 git clone https://TODOSETTHERIGHTPATH.com/hwdt
-cd HWD\ Perceptron
+cd HWD-Perceptron
 ./install.sh
 ```
 
