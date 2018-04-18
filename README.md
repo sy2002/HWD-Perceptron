@@ -20,7 +20,7 @@ Instead of installing manually you can use docker (so your system including your
 
 Open a terminal window and execute the following command:
 ```
-docker run -d -p 5000:5000 pfichtner/HWD-Perceptron
+docker run -d -p 5000:5000 pfichtner/hwd-perceptron
 ```
 
 
