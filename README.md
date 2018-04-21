@@ -14,6 +14,16 @@ frontend then displays the recognized digit right next to the painted version.
 
 Before installing, you can try it on [http://www.sy2002.de/nn.html](http://www.sy2002.de/nn.html).
 
+Docker
+------
+Instead of installing manually you can use docker (so your system including your python installation keeps untouched). 
+
+Open a terminal window and execute the following command:
+```
+docker run -d -p 5000:5000 pfichtner/hwd-perceptron
+```
+
+
 Installation
 ------------
 
