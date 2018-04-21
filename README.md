@@ -100,3 +100,62 @@ You should see the recognized number being printed. For the next digit,
 just start painting over your first digit, the paint area will be cleared
 automatically, when you paint your next digit.
 
+How does it work?
+-----------------
+
+### Basic principle
+
+XYZ ABC
+
+Picture of the net?
+
+### Server
+
+XYZ
+
+Scroll back in the server terminal: See ASCII art and recognition
+
+### Increasing the recognition accuracy
+
+For saving time during the installation process, only a suboptimally trained
+network is being created. Training a network well takes significant time.
+
+...
+
+Experiment with better recognition rate, try XYZ file that is part of the
+package:
+
+Or train a better network by yourself by following these steps:
+
+1. akd sdfkl lkj dfkslj 
+
+2. dfjlskd fslkj dfkls f
+
+3. sdkaslkdjasjlkd
+
+### Flexible Python Perceptron Class
+
+The heart of this project is the flexible Python Perceptron class called
+`SimplePerceptronNN` and located in [spnn.py](server/spnn.py). It can not
+only be used for learning to recognize handwritten digits, but it can be
+used for "anything".
+
+`SimplePerceptronNN` allows a flexible layout of the network by specifying
+the input nodes, the hidden nodes and the output nodes within a simple
+Python list. The following pseudo-code is illustrating this:
+
+```python
+import spnn
+
+learning_rate = 0.1
+nn = spnn.SimplePerceptronNN([784, 100, 10], learning_rate)
+
+# you need a deeper network? try this:
+# nn = spnn.SimplePerceptronNN([784, 2000, 500, 250, 100, 10], learning_rate)
+
+for t, o in zip(training, desired_output):
+    nn.train(t, o)
+
+# network is now ready to answer questions:
+output = nn.query(the_input)    
+```

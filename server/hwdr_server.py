@@ -19,8 +19,8 @@ CORS(app)
 #recommended: great success/size-ratio and success rate of 97.83% 
 #the_network = "saved_nn/784-100-10-0.004-2nd-epoch-66.npz"
 
-#for demo purposes: you need to run XYZ from the root of the project folder
-#to make sure this file exists
+#for demo purposes with a lower success rate: you need to run ./install.sh
+#from the root of the project folder to make sure this file exists
 the_network = "saved_nn/test-epoch-1.npz"
 
 nn = spnn.SimplePerceptronNN(filename=the_network)
