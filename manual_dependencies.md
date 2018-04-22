@@ -27,6 +27,11 @@ Dependencies
    Python 3.6 and not Python 2
 5. Venv for Python 3.6 (Virtual Environment)
 
+If you can satisfy the dependencies (3) and (4), then you do not
+necessarily need to run the system inside a Virtual Environment. The
+following installation is not installing any `python` command but only
+a `python3` command, and therefore the Virtual Environment is needed.
+
 Step-by-step guide for the minimal Ubuntu 16.04 LTS
 ---------------------------------------------------
 
