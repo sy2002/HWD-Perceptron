@@ -135,11 +135,11 @@ to install or train the server again. Instead, you can execute this:
 cd /opt/HWD-Perceptron
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
-./run_server --host=0.0.0.0
+./run_server.sh --host=0.0.0.0
 ```
 
 If you are not running inside Docker, then the last line should look like this:
 
 ```
-./run_server
+./run_server.sh
 ```
