@@ -141,5 +141,5 @@ export LANG=C.UTF-8
 If you are not running inside Docker, then the last line should look like this:
 
 ```
-./run_server --host=0.0.0.0
+./run_server
 ```
