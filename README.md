@@ -23,6 +23,7 @@ your Python installation keeps untouched.
 Open a terminal window and execute the following command:
 
 ```
+git clone https://github.com/sy2002/HWD-Perceptron.git
 docker run -it -p 5000:5000 sy2002/hwd-perceptron
 ```
 
