@@ -27,7 +27,7 @@ docker run -it -p 5000:5000 sy2002/hwd-perceptron
 ```
 
 After your Docker container runs, skip forward to section
-"[Running](#Running)" for starting the client (HTML) in your web browser.
+"[Running](#running)" for starting the client (HTML) in your web browser.
 
 Installation
 ------------
