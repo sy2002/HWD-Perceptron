@@ -1,6 +1,6 @@
 FROM python:3
 
-MAINTAINER pfichtner "https://github.com/pfichtner"
+MAINTAINER sy2002 "https://github.com/sy2002"
 
 RUN mkdir -p /opt/HWD-Perceptron
 RUN git clone https://github.com/sy2002/HWD-Perceptron.git /opt/HWD-Perceptron
@@ -18,5 +18,4 @@ RUN python hwdt.py
 
 # run process
 WORKDIR /opt/HWD-Perceptron/server
-CMD FLASK_APP=hwdr_server.py flask run
-
+CMD FLASK_APP=hwdr_server.py flask run --host=0.0.0.0

@@ -6,4 +6,4 @@ echo "      and execute ./run_client.sh to access the server via your web browse
 echo ""
 
 cd server
-FLASK_APP=hwdr_server.py flask run
+FLASK_APP=hwdr_server.py flask run $1

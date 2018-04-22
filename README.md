@@ -16,19 +16,25 @@ Before installing, you can try it on [http://www.sy2002.de/nn.html](http://www.s
 
 Docker
 ------
-Instead of installing manually you can use docker (so your system including your python installation keeps untouched). 
+
+Instead of installing manually you can use Docker, so your system including
+your Python installation keeps untouched. 
 
 Open a terminal window and execute the following command:
+
 ```
-docker run -d -p 5000:5000 pfichtner/hwd-perceptron
+docker run -it -p 5000:5000 sy2002/hwd-perceptron
 ```
 
+After your Docker container runs, skip forward to section
+"[Running](#Running)" for starting the client (HTML) in your web browser.
 
 Installation
 ------------
 
-You need `Python 3` including `pip` and a bash shell on Mac OS, Linux or
-Windows. On Windows this might be Cygwin or a Linux Subsystem (Windows 10+).
+You need `Python 3.6` (or newer) including `pip` and a bash shell on Mac OS,
+Linux or Windows. On Windows this might be Cygwin or a
+Linux Subsystem (Windows 10+).
 
 Open a terminal window and execute the following commands:
 
@@ -58,6 +64,18 @@ The following things will happen during the installation:
 
 ### Troubleshooting
 
+#### Installing inside a Docker container
+
+If you are manually installing inside a Docker container, please make sure
+that you run `./install.sh --host=0.0.0.0`, instead of `./install.sh`.
+
+It is also important, that you are adding the port mapping parameter
+`-p 5000:5000` when invoking Docker, so that the Docker internal port 5000
+is mapped to your host and visible from within your host machine's web
+browser.
+
+#### Python 2 vs. Python 3 and Virtual Environment
+
 On some systems, there are multiple versions of Python installed. Sometimes
 Python 2 can be executed via `python` and Python 3 via `python3`. This
 project expects, that running `python` and `pip` yields Python 3. If this
@@ -82,22 +100,51 @@ source bin/activate
 ./install.sh
 ```
 
+#### Debian and Ubuntu
+
+On Debian or Ubuntu systems, you may need to install the `python3-venv`
+package using the following command before you run the above-mentioned
+Virtual Environment installation instructions (you may need to use sudo with
+that command):
+
+```
+apt-get install python3-venv
+```
+
+#### Manual installation of dependencies
+
+If you run a clean or minimal Ubuntu 16.04 LTS, then you need to install
+various dependencies manually, including `Python 3.6` because Ubuntu 10.04 LTS
+is installing an older version 3.
+
+[manual_dependencies.md](manual_dependencies.md) shows how to manually install
+the necessary dependencies on Ubuntu 16.04 LTS.
+
+Even if you use another Linux version, this might be helpful for you to see,
+what you need to install.
+
 Running
 -------
 
-If you followed the above-mentioned steps, then you should have the
-recognition server up and running locally in your terminal window and
-you should see something like this:
+If you used the Docker container or followed the above-mentioned manual
+installation steps, then you should have the recognition server up and running
+locally in your terminal window and you should see something like this:
 
 ```
   * Serving Flask app "hwdr_server"
   * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
+Hint: In Docker, the IP:Port is shown as 0.0.0.0:5000.
+
 Since the trained network has been saved, you can also run the server after
 the successful installation without the need to train it again.
-Just execute ```./run_server.sh``` in a terminal window from the project's
-root folder.
+Just execute `./run_server.sh` in a terminal window from the project's
+root folder. If you are using a Virtual Environment, then don't forget to
+execute `source bin/activate` before you run the server.
+
+If you run inside a Docker container that you manually build, please make
+sure that you run `./run_server.sh --host=0.0.0.0`.
 
 In either case, leave the server's terminal window running and open a new
 terminal window. Go to the project's root folder and execute
@@ -109,63 +156,3 @@ Now you can start experimenting: Paint a digit and press the recognize button.
 You should see the recognized number being printed. For the next digit,
 just start painting over your first digit, the paint area will be cleared
 automatically, when you paint your next digit.
-
-How does it work?
------------------
-
-### Basic principle
-
-XYZ ABC
-
-Picture of the net?
-
-### Server
-
-XYZ
-
-Scroll back in the server terminal: See ASCII art and recognition
-
-### Increasing the recognition accuracy
-
-For saving time during the installation process, only a suboptimally trained
-network is being created. Training a network well takes significant time.
-
-...
-
-Experiment with better recognition rate, try XYZ file that is part of the
-package:
-
-Or train a better network by yourself by following these steps:
-
-1. akd sdfkl lkj dfkslj 
-
-2. dfjlskd fslkj dfkls f
-
-3. sdkaslkdjasjlkd
-
-### Flexible Python Perceptron Class
-
-The heart of this project is the flexible Python Perceptron class called
-`SimplePerceptronNN` and located in [spnn.py](server/spnn.py). It can not
-only be used for learning to recognize handwritten digits, but it can be
-used for "anything".
-
-`SimplePerceptronNN` allows a flexible layout of the network by specifying
-the input nodes, the hidden nodes and the output nodes within a simple
-Python list. The following pseudo-code is illustrating this:
-
-```python
-import spnn
-
-learning_rate = 0.1
-nn = spnn.SimplePerceptronNN([784, 100, 10], learning_rate)
-
-# you need a deeper network? try this:
-# nn = spnn.SimplePerceptronNN([784, 2000, 500, 250, 100, 10], learning_rate)
-
-for t, o in zip(training, desired_output):
-    nn.train(t, o)
-
-# network is now ready to answer questions:
-output = nn.query(the_input)    
-```
