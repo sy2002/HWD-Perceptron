@@ -168,7 +168,7 @@ How it works
 1. Using the MNIST dataset from LeCun et al. has become the "Hello World"
    example for Neural Networks and basic Machine Learning. Have a look at
    the folder
-   [server/training](server/training/README.md#background-information)
+   [server/training](server/training#background-information)
    to learn more about that. The bottom line is, that the network is
    being trained using 28x28 pixels grayscale images.
 
@@ -400,14 +400,15 @@ resources (CPU and RAM) than `test-epoch-1.npz`.
 
 1. Define the network topology that you want by changing line 40 of the
    training application [server/hwdt.py](server/hwdt.py#L40). Here is an
-   example that creates a "deep" network:
+   example that creates a network, that is a bit "deeper" than the initial
+   demo network:
 
    ```
-   network_shape = [784, 200, 150, 100, 50, 10]
+   network_shape = [784, 400, 100, 10]
    ```
 
-   This topology would mean: 784 input nodes, then 4 hidden layers with
-   200 => 150 => 100 => 50 nodes and then 10 output nodes.
+   This topology means: 784 input nodes, then 2 hidden layers with
+   400 => 100 nodes and then 10 output nodes.
 
 2. Define the learning rate in line 41. This is a sensitive value that exists
    between the two extremes: If you choose it too big, then the Gradient
@@ -424,13 +425,13 @@ resources (CPU and RAM) than `test-epoch-1.npz`.
 
 5. Save the modified `hwdt.py` and run it. Depending on how powerful your
    machine is, this might take a while. On my Mid 2012 MacBookPro, it
-   took ~10 minutes.
+   took ~12 minutes.
 
-6. The resulting success rate is XX.XX%. This shows, that a complicated and
-   deep network does not necessarily mean "better results". (You might want
+6. After three epochs, the resulting success rate is 95.11%. This shows, that
+   a complicated and "deep" network does not necessarily mean
+   "far better results" than the smaller and easier network. You might want
    to inspire yourself by reading the [training results](server/hwdt.py#L18)
-   and then go back to step #1 to create and train a network that actually has
-   better results as the sample networks provided in this repository.
+   and then play around with topologies, learning rates and epochs.
 
 7. In the folder `server/saved_nn` you will find one `.npz` file per epoch.
    You can inspect the success rate of each epoch using `load_test.py`
@@ -438,4 +439,6 @@ resources (CPU and RAM) than `test-epoch-1.npz`.
 
 8. Use your network: Go to line 24 of the server
    [server/hwdr_server.py](server/hwdr_server.py#L24)
-   and change it to the filename of your freshly trained network.
+   and change it to the filename of your freshly trained network. Stop any
+   running server instance and restart it.
+

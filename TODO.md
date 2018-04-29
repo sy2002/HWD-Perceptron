@@ -1,3 +1,4 @@
+Stub for server/README.md
 
 ### Flexible Python Perceptron Class
 
@@ -25,7 +26,3 @@ for t, o in zip(training, desired_output):
 # network is now ready to answer questions:
 output = nn.query(the_input)    
 ```
-
-Tinkering
----------
-
