@@ -27,6 +27,7 @@
     <!-- CHANGE SERVER_URL TO USE A DIFFERENT SERVER -->    
     <script>
       var SERVER_URL="http://localhost:5000"
+      //var SERVER_URL="http://sy2002.pythonanywhere.com"
       //var SERVER_URL="http://192.168.178.95:5000"
 
       var REST_API=SERVER_URL + "/recognize?imgdata="
@@ -65,7 +66,7 @@
           </p>
         </div>
         <div class="col-sm">
-          <p>Recognized digit:</p>
+          <p id="rec_hl">Recognized digit:</p>
           <div id="nn_output" style="display: flex; align-items: center; justify-content: center; width: 284px; height: 284px;" class="border border-2 border-primary"></div>
           <p id="error_output" class="text-danger"></p>
         </div>
@@ -171,6 +172,7 @@
       function erase()
       {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("nn_output").innerHTML = "";
         document.getElementById("error_output").innerHTML = "";
       }
 
@@ -330,6 +332,15 @@
         }
         console.log(s);
 
+        //if the recognized digit <div> is not visible (e.g. because it is positioned under the
+        //drawing area due to responsive behavior on mobile) then scroll
+        var left_box = document.getElementById("paint_here");
+        var left_box_y = left_box.getBoundingClientRect().top;
+        var right_box = document.getElementById("rec_hl");
+        var right_box_y = right_box.getBoundingClientRect().top;
+        if (left_box_y != right_box_y)
+          window.scrollBy(0, right_box_y);
+
         //perform async REST call
         REST_CALL = REST_API + s;
         var xhttp = new XMLHttpRequest();
@@ -342,12 +353,13 @@
             {
               console.log("Recognized: ", xhttp.responseText);
               document.getElementById("error_output").innerHTML = "";
-              document.getElementById("nn_output").innerHTML = xhttp.responseText;
+              document.getElementById("nn_output").innerHTML = "<h1 class='display-1' style='font-size: 18em !important;'>" + xhttp.responseText + "</h1>";
             }
             else
             {
               console.error("Server error: ", xhttp.statusText);
-              document.getElementById("error_output").innerHTML = "<strong>Error recognizing digit!</strong><br>" + xhttp.statusText;              
+              document.getElementById("error_output").innerHTML = "<strong>Error recognizing digit!</strong><br>" + xhttp.statusText;
+              document.getElementById("nn_output").innerHTML = "";
             }
           }
         };
@@ -355,6 +367,7 @@
         {
           console.error("Error connecting to: ", SERVER_URL);
           document.getElementById("error_output").innerHTML = "<strong>Error connecting to server!</strong><br>" + SERVER_URL;
+          document.getElementById("nn_output").innerHTML = "";
         };
         xhttp.send();
       }
