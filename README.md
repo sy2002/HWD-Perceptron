@@ -345,28 +345,97 @@ that explains how to open the browser's console.
 4. Replace `<PASTE>` by pasting the number stream you copied in step #1.
 
 5. Go to the terminal, navigate to the server folder an run
-   `python test_cp.py`. You should now see the digit you painted as ASCII
-   art and you should see the output `Recognized:` followed by the
-   correctly recognized digit.
+   `python test_cp.py`. You should now see the digit you painted in the
+   browser as ASCII art and you should see the output `Recognized:` followed
+   by the correctly recognized digit.
 
 ### Increasing the recognition accuracy
 
 For saving time during the installation process, only a suboptimally trained
-network is being created. Training a network well takes significant time.
+network is being created and saved as `server/saved_nn/test-epoch-1.npz`.
+The network has a success rate of 94.87% (failure rate 5.13%). Achieving
+better results needs better training, which takes significantly more time than
+the training of `test-epoch-1.npz`.
 
-...
+#### Experiment with more optimally trained networks
 
-Experiment with better recognition rate, try XYZ file that is part of the
-package:
+In the folder [server/saved_nn](server/saved_nn) you find networks, that
+have been previously trained. Have a look at the
+[training results](server/hwdt.py#L18): They show, how different network
+topologies, learning rates and epochs lead to different recognition qualities.
 
-Or train a better network by yourself by following these steps:
+The above-mentioned training results in the comments section of the training
+application `hwdt.py` also correspond to the filenames within
+`server/saved_nn`.
 
-1. akd sdfkl lkj dfkslj 
+Pick your network. You could for example use
+`saved_nn/784-2000-10-0.02-epoch-16.npz`, which has a recognition rate of
+98.14% (failure rate 1.86%). The following steps assume, that you want to use
+this network. It is better than our smaller demo network `test-epoch-1.npz`.
+But as it has 2,000 nodes in its hidden layer, it is consuming more
+resources (CPU and RAM) than `test-epoch-1.npz`.
 
-2. dfjlskd fslkj dfkls f
+1. Test the network: Open a terminal and go to the server folder:
 
-3. sdkaslkdjasjlkd
+   ```
+   python load_test.py saved_nn/784-2000-10-0.02-epoch-16.npz training/mnist_test.csv
+   ```
 
+   You should see some basic information about the network, like the topology,
+   the success rate/failure rate and the creation date. Then progress bars
+   are displayed, while the test data is loaded and the test is being
+   performed. Finally, you should see the output should `NETWORK IS OK`.
 
+2. Use the network: Edit line 24 of
+   [server/hwdr_server.py](server/hwdr_server.py#L24) to
 
+   ```
+   the_network = "saved_nn/784-2000-10-0.02-epoch-16.npz"
+   ```
 
+   Now run the server (stop any old running instances before) and enjoy
+   the better recognition rate.
+
+#### Train an own network
+
+1. Define the network topology that you want by changing line 40 of the
+   training application [server/hwdt.py](server/hwdt.py#L40). Here is an
+   example that creates a "deep" network:
+
+   ```
+   network_shape = [784, 200, 150, 100, 50, 10]
+   ```
+
+   This topology would mean: 784 input nodes, then 4 hidden layers with
+   200 => 150 => 100 => 50 nodes and then 10 output nodes.
+
+2. Define the learning rate in line 41. This is a sensitive value that exists
+   between the two extremes: If you choose it too big, then the Gradient
+   Descent inside the Backpropagation algorithm will not find the minimum
+   values of the error functions but bounce around. The result would be
+   bad recognition rates. If you choose it too small, then the training
+   lasts ages. For the sake of the demo you might want to choose `0.03` as
+   learning rate (line 41).
+
+3. Define how many epochs you want the network to be trained. For this
+   example, `3` epochs might be a good value (line 42).
+
+4. Set the prefix of a suitable filename in line 44.
+
+5. Save the modified `hwdt.py` and run it. Depending on how powerful your
+   machine is, this might take a while. On my Mid 2012 MacBookPro, it
+   took ~10 minutes.
+
+6. The resulting success rate is XX.XX%. This shows, that a complicated and
+   deep network does not necessarily mean "better results". (You might want
+   to inspire yourself by reading the [training results](server/hwdt.py#L18)
+   and then go back to step #1 to create and train a network that actually has
+   better results as the sample networks provided in this repository.
+
+7. In the folder `server/saved_nn` you will find one `.npz` file per epoch.
+   You can inspect the success rate of each epoch using `load_test.py`
+   as described above.
+
+8. Use your network: Go to line 24 of the server
+   [server/hwdr_server.py](server/hwdr_server.py#L24)
+   and change it to the filename of your freshly trained network.
