@@ -25,8 +25,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- CHANGE SERVER_URL TO USE A DIFFERENT SERVER -->    
-    <script>        
-      var SERVER_URL="http://127.0.0.1:5000"
+    <script>
+      var SERVER_URL="http://localhost:5000"
+      //var SERVER_URL="http://192.168.178.95:5000"
 
       var REST_API=SERVER_URL + "/recognize?imgdata="
       console.log("HWD-Perceptron Client, done by sy2002 in April 2018")
@@ -65,7 +66,7 @@
         </div>
         <div class="col-sm">
           <p>Recognized digit:</p>
-          <canvas id="nn_output" width="280" height="280" class="border border-2 border-primary"></canvas>
+          <div id="nn_output" style="display: flex; align-items: center; justify-content: center; width: 284px; height: 284px;" class="border border-2 border-primary"></div>
           <p id="error_output" class="text-danger"></p>
         </div>
       </div>
@@ -170,6 +171,7 @@
       function erase()
       {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("error_output").innerHTML = "";
       }
 
       function findxy(res, e)
@@ -183,7 +185,7 @@
         {
           if (clearBeforeDraw == true)
           {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             paths = [];
             clearBeforeDraw = false;
           }
@@ -296,7 +298,7 @@
             draw(copyCtx, color, lineWidth / scaling, x1, y1, x2, y2);
           }
         }
-                  
+               
         //now bin image into 10x10 blocks (giving a 28x28 image)
         imgData = copyCtx.getImageData(0, 0, 280, 280);
         grayscaleImg = imageDataToGrayscale(imgData);
@@ -310,13 +312,15 @@
               }
             }
             mean = (1 - mean / 100); // average and invert
-            nnInput[x*28+y] = (mean - .5) / .5;
+            nnInput[x * 28 + y] = (mean - .5) / .5;
           }
         }
         
         clearBeforeDraw = true;
 
-        //for copy & pasting into sample python code
+        //generate data string for REST API call and store it in "s"
+        //additionally: generate debug output to the console, that you can use to tinker with,
+        //e.g. by using https://github.com/sy2002/HWD-Perceptron/blob/master/server/test_cp.py
         s = "";
         for (var i = 0; i < 784; i++)
         {
@@ -326,14 +330,33 @@
         }
         console.log(s);
 
-        url = "http://127.0.0.1:5000/recognize?imgdata=" + s;
-        //url = "http://sy2002.pythonanywhere.com/recognize?imgdata=" + s;
+        //perform async REST call
+        REST_CALL = REST_API + s;
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", url, false);
+        xhttp.open("GET", REST_CALL, true);
+        xhttp.onload = function (e)
+        {
+          if (xhttp.readyState === 4)
+          {
+            if (xhttp.status === 200)
+            {
+              console.log("Recognized: ", xhttp.responseText);
+              document.getElementById("error_output").innerHTML = "";
+              document.getElementById("nn_output").innerHTML = xhttp.responseText;
+            }
+            else
+            {
+              console.error("Server error: ", xhttp.statusText);
+              document.getElementById("error_output").innerHTML = "<strong>Error recognizing digit!</strong><br>" + xhttp.statusText;              
+            }
+          }
+        };
+        xhttp.onerror = function (e)
+        {
+          console.error("Error connecting to: ", SERVER_URL);
+          document.getElementById("error_output").innerHTML = "<strong>Error connecting to server!</strong><br>" + SERVER_URL;
+        };
         xhttp.send();
-        var response = xhttp.responseText;
-        console.log("Recognized: ", response)
-        document.getElementById('nn_output').innerHTML = response
       }
     </script>
 
