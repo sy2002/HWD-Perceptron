@@ -57,5 +57,5 @@ How it works
   image to the request. Example:
 
   ```
-  http:localhost:5000/recognize?imgdata=-1,-1,-1, ...
+  http://localhost:5000/recognize?imgdata=-1,-1,-1, ...
   ```
