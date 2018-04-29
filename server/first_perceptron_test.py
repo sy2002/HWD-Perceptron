@@ -4,7 +4,7 @@
 # Create a 4 layer 4-3-3-2 network and teach it to output [0.2, 0.3]
 # when the input is [0.1, 0.2, 0.3, 0.4]
 #
-# done by sy2002 at 7th of April 2018 
+# done by sy2002 on 7th of April 2018 
 
 import spnn
 

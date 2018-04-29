@@ -6,7 +6,7 @@
 # Important: All input values should be normalized between 0 < input <= 1 and
 #            due to the sigmoid activation function, the output is always 0 < output < 1
 #
-# done by sy2002 at 2nd, 7th and 8th of April 2018
+# done by sy2002 on 2nd, 7th and 8th of April 2018
 
 import numpy as np
 import sys

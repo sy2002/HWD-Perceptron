@@ -6,7 +6,7 @@
 # set are printed to stdout otherwise the command line parameter is
 # interpreted as the amount of random digits to be printed.
 #
-# done by sy2002 at April, 14th 2018
+# done by sy2002 on April, 14th 2018
 
 import os.path
 import random

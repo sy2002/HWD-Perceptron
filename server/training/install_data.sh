@@ -2,7 +2,7 @@
 
 echo ""
 echo "sy2002's HWD Perceptron - Training and Test data installer v1.0"
-echo "done at 14th of April 2018"
+echo "done on 14th of April 2018"
 echo ""
 
 if [ -f mnist_train.csv ] && [ -f mnist_test.csv ]; then

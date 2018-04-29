@@ -2,7 +2,7 @@
 #
 # Start with: FLASK_APP=hwdr_server.py flask run
 #
-# done by sy2002 at 8th of April 2018
+# done by sy2002 on 8th of April 2018
 
 import spnn
 

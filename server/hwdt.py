@@ -5,7 +5,7 @@
 # digits dataset from MNIST (http://yann.lecun.com/exdb/mnist/) converted
 # to CSV files (https://pjreddie.com/projects/mnist-in-csv/)
 #
-# done by sy2002 at 2nd, 7th and 8th of April 2018
+# done by sy2002 on 2nd, 7th and 8th of April 2018
 #
 # Some results WITHOUT data enhancement (via the "enhance_data" function):
 #

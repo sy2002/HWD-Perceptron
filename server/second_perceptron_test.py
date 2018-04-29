@@ -4,7 +4,7 @@
 # Create a 5 layer 4, 8, 5, 4, 2 network and teach it to output
 # multiple outputs depending on certain inputs.
 #
-# done by sy2002 at 7th of April 2018 
+# done by sy2002 on 7th of April 2018 
 
 import spnn
 

@@ -2,7 +2,7 @@
 
 echo ""
 echo "Handwritten Digits Recognizer via Perceptron Network - INSTALLER v1.1"
-echo "done by sy2002 at 22nd of April 2018"
+echo "done by sy2002 on 22nd of April 2018"
 echo ""
 echo "You might want to run this inside a virtual environment, so that we"
 echo "don't mess with your python setup by installing these requirements:"
