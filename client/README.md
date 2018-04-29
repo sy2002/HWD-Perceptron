@@ -59,3 +59,8 @@ How it works
   ```
   http://localhost:5000/recognize?imgdata=-1,-1,-1, ...
   ```
+
+* The server returns a plaintext digit in `xhttp.responseText` that is then
+  directly displayed by modifying the DOM as shown in
+  [Line 356](nn.html#L356). In case of an error, the error is inserted into
+  a named `<p>` element called `error_output`.
