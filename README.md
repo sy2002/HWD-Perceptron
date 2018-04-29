@@ -161,3 +161,13 @@ Now you can start experimenting: Paint a digit and press the recognize button.
 You should see the recognized number being printed. For the next digit,
 just start painting over your first digit, the paint area will be cleared
 automatically, when you paint your next digit.
+
+How it works
+------------
+
+1. Using the MNIST dataset from LeCun et al. has become the "Hello World"
+   example for Neural Networks and basic Machine Learning. Have a look at
+   the folder
+   [server/training](server/training/README.md#background-information)
+   to learn more about that.
+
