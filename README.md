@@ -6,11 +6,15 @@ Neural Networks and Machine Learning in general and more about simple
 Perceptron based handwritten digits recognition in particular.
 
 The frontend is a HTML5/JavaScript client that allows you to paint the
-digits on the screen. When you press the button, the Python Flask backend
-receives the pixels via a REST call and returns the recognized digit. The
-frontend then displays the recognized digit right next to the painted version.
+digits on the screen. When you press the Recognize button, the Python Flask
+backend receives the pixels via a REST call and returns the recognized digit.
+The frontend then displays the recognized digit right next to the painted
+version.
 
 ![HWD Sample Screenshot](client/screenshot.jpg)
+
+Try it online
+-------------
 
 Before installing, you can try it on [http://www.sy2002.de/nn.html](http://www.sy2002.de/nn.html).
 
