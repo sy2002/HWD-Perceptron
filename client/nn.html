@@ -8,9 +8,9 @@
       You can change this by modifying variable SERVER_URL.
 
       Acknowledgments:
-      * Front-end library: Bootstrap (getbootstrap.com) and Bootswatch Cerulean Theme
-        (https://bootswatch.com/cerulean/)
-      * Some of the frontend JavaScript code was adapted from myselph.de who himself
+      * Front-end library: Bootstrap (getbootstrap.com) and
+        Bootswatch Cerulean Theme (https://bootswatch.com/cerulean/)
+      * Some of the JavaScript code was adapted from http://myselph.de who himself
         adapted some of the code from an anonymous author from stackoverflow.com
       * The image preprocessing is according to the preprocessing that was done
         on the MNIST dataste: http://yann.lecun.com/exdb/mnist/
@@ -42,10 +42,9 @@
 
   <body>
     <style>
-      .border-2 {
-          border-width:2px !important;
-      }      
+      .border-2 { border-width:2px !important; }      
     </style>
+
     <p class="lead bg-primary text-white p-3 mb-2">Handwritten Digits Recognizer</p>
 
     <p class="lead ml-3 mr-3">
@@ -61,44 +60,209 @@
           <canvas id="user_digit" width="280" height="280" class="border border-2 border-primary"></canvas>
           <p>
             <button type="button" class="btn btn-primary btn-lg" onClick="doRecognize()">Recognize</button>
-            <button type="button" class="btn btn-primary btn-lg" onClick="doClear()">Clear</button>
+            <button type="button" class="btn btn-primary btn-lg" onClick="erase()">Clear</button>
           </p>
         </div>
         <div class="col-sm">
           <p>Recognized digit:</p>
           <canvas id="nn_output" width="280" height="280" class="border border-2 border-primary"></canvas>
-          <p class=></p>
+          <p id="error_output" class="text-danger"></p>
         </div>
       </div>
       <div class="row">
-        <div class="col-4">
-          kd fsalkas dklf laksfj asldkfj alsdkfj laskdfjlksfjlkwjfe lkjwlkfwkj 
-          sdkjf klj ewöjasföljkw flöwejfölkwejf lwkfjlkwfj lkwfjalksödjöklfjl
-          wlefjlwkj fklwej flkwej flkwjflkwej flkjwelk jfwlkej.
+        <div class="col-sm">
+          <p>The network learned from the famous MNIST dataset, where the digits
+          looked like the examples shown here. This is the "American way" of writing
+          digits in contrast to the "European way", where you would write particularly
+          the 1 and the 9 differently.</p>
+          <p>Please visit the project's <a href="https://github.com/sy2002/HWD-Perceptron">
+            GitHub Page</a> to learn more and to start tinkering. </p>            
+          <p><em>This demo was created by
+          <a href="http://www.sy2002.de">sy2002</a> in April 2018.</em></p>
         </div>
-        <div class="col-sm"><img src="nn_mnist_examples.png" class="img-fluid"></div>
+        <div class="col-sm">
+          <img src="nn_mnist_examples.png" class="img-fluid">
+        </div>
       </div>
     </div>
 
-    <script>
-      function doRecognize()
-      {
-        alert("Recognize pressed!")
-      }
-    </script>
+    <br><br>
 
-    <!-- Detect device type and change help text -->
+    <!-- ==========================================================================
+            DETECT DEVICE TYPE
+         ========================================================================== -->
+
     <script src="js/mobile-detect.min.js"></script>
     <script>
         var mobile_detect = new MobileDetect(window.navigator.userAgent);
-        var helptext = document.getElementById("paint_here")
+        var helptext = document.getElementById("paint_here");
+        var IS_MOBILE = false;
         if (mobile_detect.mobile())
-          helptext.innerHTML = "Draw here using your finger:"
+        {
+          helptext.innerHTML = "Draw here using your finger:";
+          IS_MOBILE = true;
+        }
         else
-          helptext.innerHTML = "Draw here (press left mouse button):"
-    </script>    
+          helptext.innerHTML = "Draw here (press left mouse button):";
+    </script>
 
-    <!-- Bootstrap JavaScript -->
+    <!-- ==========================================================================
+            DRAWING THE DIGITS
+         ========================================================================== -->
+
+    <script>
+      var canvas;
+      var ctx;
+
+      var canvas_ax, canvas_ay; //absolute top-left x,y coordinates of canvas
+
+      var prevX = 0;
+      var currX = 0;
+      var prevY = 0;
+      var currY = 0;
+      var paths = []; //recording paths
+      var paintFlag = false;
+      var color = "black";
+      var lineWidth = 20;
+          
+      var clearBeforeDraw = false; //controls whether canvas will be cleared on next mousedown event. Set to true after digit
+               
+      function calc_absolute_canvas_pos()
+      {
+        var canvas_rect = canvas.getBoundingClientRect();
+        canvas_ax = canvas_rect.left + window.pageXOffset;
+        canvas_ay = canvas_rect.top + window.pageYOffset;
+      }
+
+      function init()
+      {
+        canvas = document.getElementById('user_digit');
+        ctx = canvas.getContext("2d");        
+        calc_absolute_canvas_pos();
+
+        //regular mouse events
+        canvas.addEventListener("mousemove", function (e) { findxy('move', e) }, false);
+        canvas.addEventListener("mousedown", function (e) { findxy('down', e) }, false);
+        canvas.addEventListener("mouseup", function (e) { findxy('up', e) }, false);
+        canvas.addEventListener("mouseout", function (e) { findxy('out', e)}, false);
+
+        //touch events
+        canvas.addEventListener("touchmove", function (e) { findxy('move', e) }, false);
+        canvas.addEventListener("touchstart", function (e) { findxy('down', e) }, false);
+        canvas.addEventListener("touchend", function (e) { findxy('up', e) }, false);
+        canvas.addEventListener("touchcancel", function (e) { findxy('out', e)}, false);        
+      }
+
+      //draws a line from (x1, y1) to (x2, y2) with nice rounded caps
+      function draw(ctx, color, lineWidth, x1, y1, x2, y2)
+      {
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function erase()
+      {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function findxy(res, e)
+      {
+        if (IS_MOBILE)
+          e.preventDefault();
+
+        calc_absolute_canvas_pos();
+
+        if (res == 'down')
+        {
+          if (clearBeforeDraw == true)
+          {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            paths = [];
+            clearBeforeDraw = false;
+          }
+          
+          if (e.pageX != undefined && e.pageY != undefined)
+          {
+            currX = e.pageX - canvas_ax;
+            currY = e.pageY - canvas_ay;
+          }
+          else
+          {
+            currX = e.clientX + document.body.scrollLeft
+                    + document.documentElement.scrollLeft
+                    - canvas_ax;
+            currY = e.clientY + document.body.scrollTop
+                    + document.documentElement.scrollTop
+                    - canvas_ay;
+          }
+
+          //draw a circle
+          ctx.beginPath();
+          ctx.lineWidth = 1;
+          ctx.arc(currX,currY,lineWidth/2,0,2*Math.PI);
+          ctx.stroke();
+          ctx.closePath();
+          ctx.fill();
+          
+          paths.push([[currX], [currY]]);
+          paintFlag = true;
+        }
+
+        if (res == 'up' || res == "out")
+            paintFlag = false;
+        
+        if (res == 'move')
+        {
+          if (paintFlag)
+          {
+              //draw a line to previous point
+              prevX = currX;
+              prevY = currY;
+              if (e.pageX != undefined && e.pageY != undefined)
+              {
+                currX = e.pageX-canvas_ax;
+                currY = e.pageY-canvas_ay;
+              }
+              else
+              {
+                currX = e.clientX + document.body.scrollLeft
+                        + document.documentElement.scrollLeft
+                        - canvas_ax;
+                currY = e.clientY + document.body.scrollTop
+                        + document.documentElement.scrollTop
+                        - canvas_ay;
+              }
+              currPath = paths[paths.length-1];
+              currPath[0].push(currX);
+              currPath[1].push(currY);
+              paths[paths.length-1] = currPath;
+              draw(ctx, color, lineWidth, prevX, prevY, currX, currY);
+          }
+        }
+      }
+
+      init();
+    </script>
+
+    <!-- ==========================================================================
+            RECOGNIZE BUTTON
+         ========================================================================== -->
+
+    <!-- ==========================================================================
+            IMAGE PREPROCESSING
+         ========================================================================== -->
+
+    <!-- ==========================================================================
+            BOOTSTRAP
+         ========================================================================== -->
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
