@@ -54,7 +54,7 @@ How it works
 
 * The REST API call to the Python server is performed asynchronously. The
   data is transmitted by concatenating the number stream that represents the
-  image to the request. Example:
+  pixels of the image to the request. Example:
 
   ```
   http://localhost:5000/recognize?imgdata=-1,-1,-1, ...
