@@ -172,7 +172,7 @@ How it works
    to learn more about that. The bottom line is, that the network is
    being trained using 28x28 pixels grayscale images.
 
-2. The HTML5/JavaScript client allows you to paint the digit inside a website.
+2. The HTML5/JavaScript [client](client/nn.html) allows you to paint the digit inside a website.
    It supports desktop browsers as well as mobile touch devices. As soon as
    you press the Recognize button, your 280x280 pixels drawing is
    preprocessed, to have an optimal similarity to the training data. Have a
