@@ -169,5 +169,25 @@ How it works
    example for Neural Networks and basic Machine Learning. Have a look at
    the folder
    [server/training](server/training/README.md#background-information)
-   to learn more about that.
+   to learn more about that. The bottom line is, that the network is
+   being trained using 28x28 pixels grayscale images.
+
+2. The HTML5/JavaScript client allows you to paint the digit inside a website.
+   It supports desktop browsers as well as mobile touch devices. As soon as
+   you press the Recognize button, your 280x280 pixels drawing is
+   preprocessed, to have an optimal similarity to the training data. Have a
+   look at the [client folder](client) to learn more about this.
+   After the preprocessing, the client hands over the image via a REST API
+   call to the Python server.
+
+3. The Python server offers one REST method called "recognize", which takes
+   a long string of floating points between -1 (black) and 1 (white) as a
+   parameter. The method returns the recognized digit between 0 and 9.
+   By default, the above-mentioned installation runs the training script
+   [hwdt.py](server/hwdt.py) which is initially configured to build a 
+   Perceptron network with 28x28 = 784 input nodes, 100 nodes in the hidden
+   layer and 10 output nodes, one for the probability of each recognized
+   digit. The heavy lifting is done inside the flexible Perceptron class
+   [spnn.py](server/spnn.py). Browse the [server folder](server) and its
+   README.md to learn more.
 
