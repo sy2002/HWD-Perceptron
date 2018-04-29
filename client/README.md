@@ -22,7 +22,7 @@ How it works
   interface that scales from desktop to phone.
 
 * There are two important named elements: `user-digits` is a HTML5 Canvas
-  used to draw the digit and `rec_hl` is a `<div>` of the same size as
+  used to draw the digit and `nn_output` is a `<div>` of the same size as
   the Canvas to display the result.
 
 * The net size of the Canvas is 280x280 pixels, that is 10x in each axis the
