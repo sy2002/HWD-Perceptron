@@ -172,22 +172,201 @@ How it works
    to learn more about that. The bottom line is, that the network is
    being trained using 28x28 pixels grayscale images.
 
-2. The HTML5/JavaScript [client](client/nn.html) allows you to paint the digit inside a website.
-   It supports desktop browsers as well as mobile touch devices. As soon as
-   you press the Recognize button, your 280x280 pixels drawing is
-   preprocessed, to have an optimal similarity to the training data. Have a
-   look at the [client folder](client) to learn more about this.
-   After the preprocessing, the client hands over the image via a REST API
-   call to the Python server.
+2. The HTML5/JavaScript [client](client/nn.html) allows you to paint the digit
+   inside a website. It supports desktop browsers as well as mobile touch
+   devices. As soon as you press the Recognize button, your 280x280 pixels
+   drawing is preprocessed to have an optimal similarity to the training
+   data and then scaled down to 28x28 pixels. Have a look at the
+   [client folder](client) to learn more about this. After the preprocessing,
+   the client hands over the image via a REST API call to the Python server.
 
-3. The Python server offers one REST method called "recognize", which takes
-   a long string of floating points between -1 (black) and 1 (white) as a
-   parameter. The method returns the recognized digit between 0 and 9.
-   By default, the above-mentioned installation runs the training script
-   [hwdt.py](server/hwdt.py) which is initially configured to build a 
+3. The Python [server](server/hwdr_server.py) offers one REST method called
+   "recognize", which takes a long string of comma separated floating point
+   values between -1 (black) and 1 (white). These values are representing the
+   28x28 pixels as a parameter.
+   The method returns the recognized digit between 0 and 9. By default, the
+   above-mentioned installation runs the training script
+   [hwdt.py](server/hwdt.py) which is initially configured to build a
    Perceptron network with 28x28 = 784 input nodes, 100 nodes in the hidden
    layer and 10 output nodes, one for the probability of each recognized
-   digit. The heavy lifting is done inside the flexible Perceptron class
-   [spnn.py](server/spnn.py). Browse the [server folder](server) and its
+   digit. The heavy lifting is done inside the flexible Perceptron
+   class [spnn.py](server/spnn.py). Browse the [server folder](server) and its
    README.md to learn more.
+
+Tinkering
+---------
+
+### Manual installation vs. Docker
+
+In case you installed the project manually, just navigate to the root folder
+of the project to start tinkering. In case you used the Virtual Environment,
+don't forget to enter `source bin/activate` before you start.
+
+In case you used Docker, execute bash when starting the image and navigate
+to /opt/HWD-Perceptron:
+
+```
+docker run -it -p 5000:5000 sy2002/hwd-perceptron /bin/bash
+cd /opt/HWD-Perceptron
+```
+
+The manual start of bash as shown here is necessary within the `docker run`
+command because otherwise, the default startup from the
+[Dockerfile](Dockerfile) is used, which would immediately start up the server,
+preventing you from tinkering.
+
+For your system's web browser (outside Docker) being able to access the
+server, you need to run it using `./run_server.sh --host=0.0.0.0` as described
+above in the "[Running](#running)" section.
+
+### Inspect the training data
+
+As a first simple experiment: Inspect 25 random digits from the training data
+and show them as ASCII art on your command line. The script is located at
+the root folder of the project.
+
+```
+./show_data.py 25
+```
+
+Scroll back your terminal window to see the 25 ASCII arts that might look
+similar to these examples.
+
+```
+=============================
+              2
+=============================
+                            
+                .--:+-      
+             .+#%%%%%%+     
+             +%%%=:::##:    
+             =#-     .%+    
+                      #-    
+                      *+    
+                      #.    
+                     .*     
+                     %-     
+                     #.     
+           ..      -#:      
+       .#%##%-    =%+       
+      +%%%%%%%#+-+%+        
+     *%%*++=:+%%%%%-        
+    +#=      :#%%%=*-       
+    +*     .:@%#:  =#+      
+    %*  :-=%%%#.     +#=    
+    *%%+%%%%#:        :=    
+    :%%%%#=.                
+     .-+:                   
+                              
+=============================
+              3
+=============================
+                            
+          -*%%@#:           
+          %%%%%%%.          
+          %%:. :##          
+          ..    :%=         
+                :%+         
+              . -%=         
+            -+%#%#          
+           +%%%%%.          
+          .%%%%%%:          
+          .%%#+.##          
+           .:   :%:         
+                 =*         
+                 .%.        
+                  %=        
+                  +=        
+        .=-       =+        
+        *%*      :%*        
+        .%%#=:==+%#.        
+         .%%%%%%%%-         
+           .*#+--           
+```
+
+### Manual processing of the client's output
+
+The HTML5/JavaScript client prints the 28x28 pixels, converted to floating
+point numbers between -1 (white) and 1 (black) to the browser's console.
+By copy/pasting it from here, you can run a Python test script or manually
+invoke the REST API of your server.
+
+Here is a
+[StackExchange Article](https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers)
+that explains how to open the browser's console.
+
+#### Invoking the REST API manually
+
+1. Open `nn.html` in your web browser, for example by using `./run_client.sh`.
+   Make sure that your local server is *not* running as we want to invoke
+   the REST API manually. 
+
+2. Open the browser's console as described above.
+
+3. Draw a digit and press the Recognize button: The error message "Error
+   connecting to server!" is shown and you should now see a bunch of floating
+   point numbers ranging from -1 to 1 in your console. Leave the browser
+   window including the console open.
+
+4. Open a new terminal window and start your local server as described
+   above in "[Running](#running)".
+
+5. Open a *new* browser window (leave the other one from step #3 open) and
+   enter this link *without* pressing enter, yet:
+
+   ```
+   http://localhost:5000/recognize?imgdata=
+   ```
+
+6. Go back to the window from step #3 and select all the floating point
+   numbers and COPY them.
+
+7. PASTE the numbers in your new browser window from step #5 by appending
+   them behind the `=` sign. Press enter/load the page.
+
+8. You should see the REST API's response, which is Neuronal Networks's
+   response to the digit, that you have drawn in the above-mentioned step #3.
+
+#### Running the classification manually as Python script
+
+1. You need to COPY the floating point number stream from the browser's
+   console, so please execute the steps #1 to #3 and then #6 of the
+   above-mentioned instructions.
+
+2. Go to the file [server/test_cp.py](server/test_cp.py#L29) line 29 and
+   comment out this line.
+
+3. Add a new line directly after line 29:
+
+   ```
+   raw_input = [<PASTE>]
+   ```
+
+4. Replace `<PASTE>` by pasting the number stream you copied in step #1.
+
+5. Go to the terminal, navigate to the server folder an run
+   `python test_cp.py`. You should now see the digit you painted as ASCII
+   art and you should see the output `Recognized:` followed by the
+   correctly recognized digit.
+
+### Increasing the recognition accuracy
+
+For saving time during the installation process, only a suboptimally trained
+network is being created. Training a network well takes significant time.
+
+...
+
+Experiment with better recognition rate, try XYZ file that is part of the
+package:
+
+Or train a better network by yourself by following these steps:
+
+1. akd sdfkl lkj dfkslj 
+
+2. dfjlskd fslkj dfkls f
+
+3. sdkaslkdjasjlkd
+
+
+
 
