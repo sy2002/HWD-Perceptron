@@ -60,7 +60,7 @@ output = nn.query(the_input)
   because after all, this class is called *Simple* Perceptron Neural Network.
   And it works pretty well - even without a bias.
 
-* For a similar reason, I am using the [Sigmoid Function](https://en.wikipedia.org/wiki/Sigmoid_function):
+* For a similar reason, I am using the [Sigmoid Function](https://en.wikipedia.org/wiki/Sigmoid_function)
   as activation function: I wanted to work through the math behind creating
   the backpropagation algorithm by myself (which includes calculating partial
   derivatives of it to obtain the gradient and then simplifying and
