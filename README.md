@@ -157,10 +157,11 @@ terminal window. Go to the project's root folder and execute
 a page that looks similar to the screenshot above. You can also open this
 page manually; it is located at ```client/nn.html```.
 
-Now you can start experimenting: Paint a digit and press the recognize button.
-You should see the recognized number being printed. For the next digit,
+Now you can start experimenting: Draw a digit and press the recognize button.
+You should see the recognized number being shown. For the next digit,
 just start painting over your first digit, the paint area will be cleared
-automatically, when you paint your next digit.
+automatically, when you paint your next digit. And in the server terminal
+window, you will see ASCII art version of the digits that you painted.
 
 How it works
 ------------
@@ -427,8 +428,9 @@ resources (CPU and RAM) than `test-epoch-1.npz`.
    machine is, this might take a while. On my Mid 2012 MacBookPro, it
    took ~12 minutes.
 
-6. After three epochs, the resulting success rate is 95.11%. This shows, that
-   a complicated and "deep" network does not necessarily mean
+6. After three epochs, the resulting success rate is 95.11%. This is 0.24
+   percentage points better than our "quick & dirty" network and it shows,
+   that a more complicated and "deep" network does not necessarily mean
    "far better results" than the smaller and easier network. You might want
    to inspire yourself by reading the [training results](server/hwdt.py#L18)
    and then play around with topologies, learning rates and epochs.
