@@ -41,9 +41,32 @@ nn = spnn.SimplePerceptronNN([784, 100, 10], learning_rate)
 # you need a deeper network? try this:
 # nn = spnn.SimplePerceptronNN([784, 2000, 500, 250, 100, 10], learning_rate)
 
+# make sure that the length of the 'training' list equals the amount of input
+# nodes and the length of 'desired_output' equals the amount of output nodes
 for t, o in zip(training, desired_output):
     nn.train(t, o)
 
 # network is now ready to answer questions:
 output = nn.query(the_input)    
 ```
+
+### Design Decisions
+
+* The network can be arbitrarily big and/or deep. But keep in mind that the
+  code is CPU-only code (no GPU acceleration), so it quickly becomes pretty
+  CPU and RAM hungry.
+
+* I decided not to use any [bias](https://en.wikipedia.org/wiki/Perceptron#Definition),
+  because after all, this class is called *Simple* Perceptron Neural Network.
+  And it works pretty well - even without a bias.
+
+* For a similar reason, I am using the [Sigmoid Function](https://en.wikipedia.org/wiki/Sigmoid_function):
+  as activation function: I wanted to work through the math behind creating
+  the backpropagation algorithm by myself (which includes calculating partial
+  derivatives of it to obtain the gradient and then simplifying and
+  transforming it all to be doable in pure matrix multiplications) and it
+  seemed to me, that the Signmoid Function is "kind of easy but still hard
+  enough" for me personally and my current state of learning to actually
+  be able to do it. I know, that other functions would work better.
+
+
