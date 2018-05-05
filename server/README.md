@@ -17,5 +17,33 @@ The following table is sorted by importance.
 |training                  |Folder that stores training data. There is a [README.md](training) there worth reading.
 |saved_nn                  |Folder that contains networks, that I experimented with. Have a look at the [training results](hwdt.py#L10) to learn more about them and to choose, which one you might want to test. The folder also contains by default all networks that you generate with `hwdt.py`.
 |first_perceptron_test.py  |This was the development testbed I used while developing `SimplePerceptronNN (spnn.py)`. It trains a network with 4 input nodes, 2 hidden layers with 3 nodes each and 2 output nodes to output a certain value pair given certain inputs.
-|second_perceptron_test.py |After `first_perceptron_test.py` worked, I used this more advanced development testbed to check, if deeper networks are working (I used [4, 8, 5, 4, 2]) and if this "low node count but deep" network could learn a bit more [complex excercise](second_perceptron_test.py#L16). I also used this to get a first idea about learning times and CPU power requirements.
+|second_perceptron_test.py |After `first_perceptron_test.py` worked, I used this more advanced development testbed to check, if deeper networks are working (I used [4, 8, 5, 4, 2]) and if this "low node count but deep" network could learn an [excercise](second_perceptron_test.py#L16), that is a bit more complex. I also used this to get a first idea about learning times and CPU power requirements.
 |second_perceptron_test.txt|Results achieved with `second_perceptron_test.py`.
+
+SimplePerceptronNN: Flexible Python Perceptron Class
+----------------------------------------------------
+
+The heart of this project is the flexible Python Perceptron class called
+`SimplePerceptronNN` and located in [spnn.py](spnn.py). It can not
+only be used for learning to recognize handwritten digits, but it can be
+used for "anything".
+
+`SimplePerceptronNN` allows a flexible layout of the network by specifying
+the input nodes, the hidden nodes and the output nodes within a simple
+Python list. The following pseudo-code is illustrating this:
+
+```python
+import spnn
+
+learning_rate = 0.1
+nn = spnn.SimplePerceptronNN([784, 100, 10], learning_rate)
+
+# you need a deeper network? try this:
+# nn = spnn.SimplePerceptronNN([784, 2000, 500, 250, 100, 10], learning_rate)
+
+for t, o in zip(training, desired_output):
+    nn.train(t, o)
+
+# network is now ready to answer questions:
+output = nn.query(the_input)    
+```
