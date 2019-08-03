@@ -37,7 +37,7 @@ After your Docker container runs, skip forward to section
 Installation
 ------------
 
-You need `Python 3.6` (or newer) including `pip` and a bash shell on Mac OS,
+You need `Python 3.7` (or newer) including `pip` and a bash shell on Mac OS,
 Linux or Windows. On Windows this might be Cygwin or a
 Linux Subsystem (Windows 10+).
 
@@ -119,7 +119,7 @@ apt-get install python3-venv
 #### Manual installation of dependencies
 
 If you run a clean or minimal Ubuntu 16.04 LTS, then you need to install
-various dependencies manually, including `Python 3.6` because Ubuntu 10.04 LTS
+various dependencies manually, including `Python 3.7` because Ubuntu 10.04 LTS
 is installing an older version 3.
 
 [manual_dependencies.md](manual_dependencies.md) shows how to manually install

@@ -33,8 +33,8 @@ fi
 
 if [ "$py_chk" -eq "3" ]; then
     py_subv=`python --version 2>&1|cut -d " " -f2|cut -d "." -f2`
-    if [ ! "$py_subv" -ge "6" ]; then
-        echo "Error: Python 3.6 or newer is needed for this project."
+    if [ ! "$py_subv" -ge "7" ]; then
+        echo "Error: Python 3.7 or newer is needed for this project."
         echo ""
         exit 1
     fi
