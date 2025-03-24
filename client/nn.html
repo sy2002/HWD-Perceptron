@@ -27,8 +27,10 @@
     <!-- CHANGE SERVER_URL TO USE A DIFFERENT SERVER -->    
     <script>
       var SERVER_URL="http://localhost:5000"
-      //var SERVER_URL="http://sy2002.pythonanywhere.com"
       //var SERVER_URL="http://192.168.178.95:5000"
+      
+      //Use HTTPS to avoid mixed-content blocking
+      //var SERVER_URL="https://sy2002.pythonanywhere.com"
 
       var REST_API=SERVER_URL + "/recognize?imgdata="
       console.log("HWD-Perceptron Client, done by sy2002 in April 2018")
