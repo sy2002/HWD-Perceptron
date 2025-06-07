@@ -21,7 +21,7 @@ CORS(app)
 
 #for demo purposes with a lower success rate: you need to run ./install.sh
 #from the root of the project folder to make sure this file exists
-the_network = "saved_nn/test-epoch-1.npz"
+the_network = "saved_nn/784-2000-10-0.02-epoch-16.npz"
 
 nn = spnn.SimplePerceptronNN(filename=the_network)
 
@@ -40,7 +40,7 @@ def recognize():
     #the data comes in this form:
     #-1 = no pixel ("white"), +1 = maximum pixel strength ("black")
     #additionally, it needs to be 90 degrees rotated to the right and then mirrored along the y-axis
-    adj_input = np.asfarray(raw_input).reshape(28, 28)
+    adj_input = np.asarray(raw_input).reshape(28, 28)
     adj_input = np.array(ndi.interpolation.rotate(adj_input, -90, cval=-1.0, reshape=False)).reshape(28, 28)
     adj_input = np.flip(adj_input, axis=1).reshape(784)
     adj_max   = max(adj_input)
